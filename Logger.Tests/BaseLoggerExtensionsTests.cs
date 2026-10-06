@@ -15,7 +15,7 @@ public class BaseLoggerExtensionsTests
 
         // Act
         Assert.Throws<ArgumentNullException>(() =>
-        BaseLoggerExtensions.Error(null, ""));
+        BaseLoggerExtensions.Error(null!, ""));
 
         // Assert
        
@@ -90,7 +90,7 @@ public class BaseLoggerExtensionsTests
 
         // Assert
         Assert.Throws<ArgumentNullException>(() =>
-            BaseLoggerExtensions.Warning(null, ""));
+            BaseLoggerExtensions.Warning(null!, ""));
     }
 
     [TestMethod]
@@ -102,7 +102,7 @@ public class BaseLoggerExtensionsTests
 
         // Assert
         Assert.Throws<ArgumentNullException>(() =>
-            BaseLoggerExtensions.Information(null, ""));
+            BaseLoggerExtensions.Information(null!, ""));
     }
 
     [TestMethod]
@@ -114,7 +114,7 @@ public class BaseLoggerExtensionsTests
 
         // Assert
         Assert.Throws<ArgumentNullException>(() =>
-            BaseLoggerExtensions.Debug(null, ""));
+            BaseLoggerExtensions.Debug(null!, ""));
     }
 }
 
