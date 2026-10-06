@@ -2,12 +2,12 @@
 using System;
 public class LogFactory
 {
-    private string _logFilePath;
+    private string? _logFilePath;
     public void ConfigureFileLogger(string logFilePath)
     {
         _logFilePath = logFilePath;
     }
-    public BaseLogger CreateLogger(string className)
+    public BaseLogger? CreateLogger(string className)
     {
         if(_logFilePath == null)
         {
