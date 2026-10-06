@@ -18,7 +18,7 @@ public static class BaseLoggerExtensions
     {
          ArgumentNullException.ThrowIfNull(logger);
 
-        string formattedMessage = string.Format(message, args);
+        string formattedMessage = string.Format(CultureInfo.InvariantCulture,message, args);
 
         logger.Log(LogLevel.Warning, formattedMessage);
     }
