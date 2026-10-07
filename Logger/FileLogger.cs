@@ -11,7 +11,7 @@ public class FileLogger : BaseLogger
     }
     public override void Log(LogLevel logLevel, string message)
     {
-        string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{ClassName}] [{logLevel}] {message}";
+        string logMessage = $"{DateTime.Now} {ClassName} {logLevel}: {message}";
         File.AppendAllText(_filePath, logMessage + Environment.NewLine);
     }
 }
