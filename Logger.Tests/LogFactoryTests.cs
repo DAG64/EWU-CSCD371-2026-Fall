@@ -10,7 +10,7 @@ public class LogFactoryTests
     {
         LogFactory factory = new LogFactory();
 
-        BaseLogger logger = factory.CreateLogger("TestClass");
+        BaseLogger? logger = factory.CreateLogger("TestClass");
 
         Assert.IsNull(logger);
     }
@@ -22,9 +22,9 @@ public class LogFactoryTests
 
         factory.ConfigureFileLogger("test.txt");
 
-        BaseLogger logger = factory.CreateLogger("TestClass");
+        BaseLogger? logger = factory.CreateLogger("TestClass");
 
-        Assert.IsInstanceOfType(logger, typeof(FileLogger));
+        Assert.IsInstanceOfType<FileLogger>(logger);
     }
 
     [TestMethod]
@@ -35,9 +35,10 @@ public class LogFactoryTests
         factory.ConfigureFileLogger("test.txt");
 
         // Act
-        BaseLogger logger = factory.CreateLogger(nameof(LogFactoryTests));
+        BaseLogger? logger = factory.CreateLogger(nameof(LogFactoryTests));
 
         // Assert
-        Assert.AreEqual(nameof(LogFactoryTests), logger.ClassName);
+        Assert.IsNotNull(logger);
+        Assert.AreEqual(nameof(LogFactoryTests), logger!.ClassName);
     }
 }
