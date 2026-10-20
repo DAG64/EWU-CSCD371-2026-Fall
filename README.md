@@ -1,52 +1,56 @@
-# Assignment 5
+# Assignment 5 - Directed Acyclic Graph
 
-The purpose of this assignment is to learn how to write a generic class and a generic method. To accomplish this you will write a linked list that __circles__ back on itself. We will also look at exception throwing and handling.
+## Overview
+
+Create a generic `Dag<T>` class that represents a **directed acyclic graph** (DAG). A DAG stores nodes and directed dependencies without allowing cycles. DAGs are useful for representing course prerequisites, build steps, and workflow ordering.
+
+For an edge `dependsOn → dependent`, `dependent` cannot occur until `dependsOn` occurs first. Your implementation must reject an edge that would introduce a cycle.
 
 ## Reading
 
-Chapters 11, 12
+Reference the material on generics, collections, and graph traversal covered in class.
 
-## Instructions
+## Tasks
 
-- Create a *class library* project called "GenericsHomework.". ❌✔
-- Create a node class that can contain a value of any type and points to the next node and traversing the next node points back to the first item.
-  - Define the `Node` class
-  - The values should be homogeneous.
-  - Include a constructor that takes a value.  (No validation is necessary on the value). ❌✔
-  - Add a `ToString()` override that writes out the value's `ToString()` result. ❌✔
-  - Add a `Next` property that references the next node or else refers back to itself if there are no other nodes in the list. ❌✔
-    - The `Next` property should be non-nullable (careful to follow the non-nullable property guidelines) ❌✔
-    - The `Next` property setter should be private. ❌✔
-  - Add an `Append` method that takes a value and appends a new `Node` instance after the current node (by invoking the `Next` property). ❌✔
-  - Add a `Clear` method that effectively removes all items from a list except the current node. Pay attention as to whether you should be concerned with the following:
-    - Whether it is sufficient to only set Next to itself ❌✔
-    - Whether to set the removed items to circle back on themselves. In other words, whether to close the loop of the removed items. (Provide a test to show why this is required if it is required). ❌✔
-    - Given there is a circular list of items, provide a comment to indicate whether you need to worry about garbage collection because all the items point to each other and, therefore, may never be garbage collected. ❌✔
-  - Create an Exists method to test whether a value exists in the list. ❌✔
-  - Throw an error on an attempt to Append a duplicate value. (Make sure you test for this case) ❌✔
-- You should not rely on any BCL generic classes for your implementation. ❌✔
+### Project setup
 
-## Extra Credit
+- Create a class library project named `Dag` in the `Dag` directory. ❌✔
+- Add the `Dag` project to `Dag.slnx`. ❌✔
+- Ensure the `Dag.Tests` project references the `Dag` project. ❌✔
 
-Do one of the following two options (or both if you want extra, extra credit) :)
+### `Dag<T>`
 
-1. Implement a `VennDiagram` structure that contains `n` `Circle`s that only contains homogenous **reference types** of any type. ❌✔
+- Create a generic `Dag<T>` class. ❌✔
+- Implement `AddNode(T value)`. ❌✔
+  - Add a node to the graph. ❌✔
+  - Adding an existing node must not throw or add a duplicate. ❌✔
+- Implement `AddDependency(T dependsOn, T dependent)`. ❌✔
+  - Both nodes must already exist in the graph. ❌✔
+  - Add the directed edge `dependsOn → dependent`. ❌✔
+  - Do not add duplicate edges. ❌✔
+  - Throw an `InvalidOperationException` if the edge would create a cycle. Use the message `"Adding this dependency would create a cycle."` ❌✔
+- Implement `GetDependencies(T value)` to return the nodes that `value` **directly** depends on. ❌✔
+- Implement `GetDependents(T value)` to return the nodes that **directly** depend on `value`. ❌✔
+- For an edge `dependsOn → dependent`, `GetDependencies(dependent)` includes `dependsOn`, and `GetDependents(dependsOn)` includes `dependent`. ❌✔
+- Choose and consistently apply an equality strategy for values of type `T`. ❌✔
+- Keep the graph's internal collections encapsulated. ❌✔
 
-- Each circle contains n items and each item can belong to one or more `Circle` instances.
-- You are not required to use a `Node` from earlier in the homework for your Venn diagram implementation.
-- You are welcome to use existing BCL generic classes for the extra credit.
+### Demonstration and tests
 
-1. Implement `System.Collections.Generic.ICollection<T>` on the `Node` class ❌✔
+- Demonstrate a fan-out/fan-in dependency graph using these course prerequisites: `CSCD 211 → CSCD 300`, `CSCD 211 → CSCD 320`, `CSCD 300 → CSCD 371`, and `CSCD 320 → CSCD 371`. CSCD 211 is a prerequisite for both intermediate courses, and both intermediate courses are prerequisites for CSCD 371. ❌✔
+- Attempt to add `CSCD 371 → CSCD 211` and verify that an `InvalidOperationException` is thrown. ❌✔
+- Unit test node and dependency addition, duplicate nodes and edges, cycle detection, and the results of `GetDependencies` and `GetDependents`. ❌✔
+- Include tests for relevant boundary cases, such as querying or adding dependencies for nodes that are not in the graph. ❌✔
 
 ## Fundamentals
 
-- Place all shared project properties into a `Directory.Build.Props` file.
-- nullable reference types is enabled  ❌✔
-- Ensure that you turn on code analysis for all projects(EnableNETAnalyzers)  ❌✔
-- Set LangVersion and the TargetFramework to the latest released versions available (preview versions optional)   ❌✔
-- and enabled .NET analyzers for both projects ❌✔
-- For this assignment, always use `Assert.AreEqual<T>()` (the generic version)  ❌✔
-- All of the above should be unit tested ❌✔
-- Choose simplicity over complexity ❌✔
+- Target all projects at .NET 10 (`net10.0`) and use the latest `LangVersion`.
+- Enable nullable reference types for all projects. ❌✔
+- Enable .NET analyzers and enforce code style during builds for all projects. ❌✔
+- Ensure there are no build errors or warnings, including code analysis warnings. ❌✔
+- Unit test the behavior required above. ❌✔
+- Choose simplicity over complexity. ❌✔
 
-## See [Docs](https://github.com/IntelliTect-Samples/EWU-CSCD371-2026-Fall-Instructors/tree/main/Docs)
+## Extra Credit
+- **Remove a node:** Add `RemoveNode(T value)` and remove all incoming and outgoing edges associated with that node. Verify that unrelated nodes and edges remain unchanged. ❌✔
+- **Render as a flow chart:**: Add a method that can output the graph in [mermaid flow chart](https://mermaid.ai/open-source/syntax/flowchart.html) syntax. ❌✔
