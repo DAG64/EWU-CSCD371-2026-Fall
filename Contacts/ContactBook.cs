@@ -6,6 +6,7 @@ public class ContactBook
 
     public bool Add(IContact item)
     {
+        ArgumentNullException.ThrowIfNull(item); // null contacts would crash List 
         return Contacts.Add(item);
     }
 
@@ -24,6 +25,7 @@ public class ContactBook
     {
         return Contacts.Contains(item);
     }
+    public bool IsEmpty => Contacts.Count == 0;
 
     public IEnumerable<IContact> GetAll() => Contacts;
 }
