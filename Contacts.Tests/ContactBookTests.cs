@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+namespace Contacts.Tests;
+
 [TestClass]
 public class ContactBookTests
 {
