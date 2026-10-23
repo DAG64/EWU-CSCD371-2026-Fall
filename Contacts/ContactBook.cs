@@ -27,5 +27,6 @@ public class ContactBook
     }
     public bool IsEmpty => Contacts.Count == 0;
 
-    public IEnumerable<IContact> GetAll() => Contacts;
+    //public IEnumerable<IContact> GetAll() => Contacts;
+    public IContact[] GetAll() => [.. Contacts];
 }
