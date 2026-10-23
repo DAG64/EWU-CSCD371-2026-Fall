@@ -25,5 +25,5 @@ public class ContactBook
         return Contacts.Contains(item);
     }
 
-    public IEnumerable<IContact> GetAll() => Contacts;
+     public IContact[] GetAll() => Contacts.ToArray();
 }
