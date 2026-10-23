@@ -10,7 +10,7 @@ public class Program
 
         while (true)
         {
-            Console.WriteLine("\n=== Contacts CLI ===");
+            Console.WriteLine("\n=== Contacts Book CLI ===");
             Console.WriteLine("1. Add Student");
             Console.WriteLine("2. Add Employee");
             Console.WriteLine("3. List Contacts");
@@ -23,10 +23,12 @@ public class Program
             switch (choice)
             {
                 case "1":
+                    Console.WriteLine("Add a Student");
                     AddStudent(book, nextId++);
                     break;
 
                 case "2":
+                    Console.WriteLine("Add an Employee");
                     AddEmployee(book, nextId++);
                     break;
 
@@ -35,14 +37,16 @@ public class Program
                     break;
 
                 case "4":
+                    Console.WriteLine("Remove a Contact");
                     Remove(book);
                     break;
 
                 case "5":
+                    Console.WriteLine("Goodbye");
                     return;
 
                 default:
-                    Console.WriteLine("Invalid choice.");
+                    Console.WriteLine("Invalid choice. Try again");
                     break;
             }
         }
@@ -82,7 +86,7 @@ public class Program
     {
         var all = book.GetAll();
 
-        if (!all.Any())
+        if (book.IsEmpty) //(!all.Any())
         {
             Console.WriteLine("No contacts stored.");
             return;
@@ -105,6 +109,11 @@ public class Program
 
     private static void Remove(ContactBook book)
     {
+        if (book.IsEmpty)
+        {
+            Console.WriteLine("No contacts stored.");
+            return;
+        }
         Console.Write("ID to remove: ");
 
         if (!int.TryParse(Console.ReadLine(), out var id))
@@ -121,19 +130,15 @@ public class Program
 
     private static FullName ReadName()
     {
-        Console.Write("First: ");
+        Console.Write("First Name: ");
         var first = Console.ReadLine() ?? "";
 
-        Console.Write("Middle (optional): ");
+        Console.Write("Middle Name (optional): ");
         var middle = Console.ReadLine();
 
-        Console.Write("Last: ");
+        Console.Write("Last Name: ");
         var last = Console.ReadLine() ?? "";
 
-        return new FullName(
-            first,
-            last,
-            string.IsNullOrWhiteSpace(middle) ? null : middle
-        );
+        return new FullName(first, last, string.IsNullOrWhiteSpace(middle) ? null : middle);
     }
 }
